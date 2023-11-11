@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exibição de Dados</title>
+</head>
+<body>
+    <h1>Dados Recebidos do Servidor</h1>
+    <div id="data"></div>
+
+    <script>
+        // Função para fazer a solicitação HTTP
+        function fetchData() {
+            fetch('http://localhost:8080/')
+                .then(response => response.json())
+                .then(data => {
+                    displayData(data);
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar os dados:', error);
+                });
+        }
+
+        // Função para exibir os dados na página
+        function displayData(data) {
+            const dataDiv = document.getElementById('data');
+            dataDiv.innerHTML = '<h2>Dados JSON Recebidos:</h2>';
+
+            // Criando uma lista não ordenada para exibir os itens
+            const ul = document.createElement('ul');
+
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `ID: ${item.id}, Nome: ${item.nome}, Senha: ${item.senha}, Score: ${item.score}, Chefe: ${item.chefe}`;
+                ul.appendChild(li);
+            });
+
+            dataDiv.appendChild(ul);
+        }
+
+        // Chamando a função para buscar os dados
+        fetchData();
+    </script>
+</body>
+</html>
